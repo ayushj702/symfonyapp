@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My-Admin{% endblock %}</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/src/View/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+<body class="d-flex flex-column vh-100">
+    {% block header %}
+    {% include 'Partials/header.html.twig' %}
+    {% endblock %}
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+     {% block footer %}
+    {% include 'Partials/footer.html.twig' %}
+    {% endblock %}
+
+</body>
+</html>

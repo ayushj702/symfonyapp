@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h1>Welcome, {{ app.user.name }}!</h1>
+
+<div>
+    <p><strong>Name:</strong> {{ app.user.name }}</p>
+    <p><strong>Email:</strong> {{ app.user.email }}</p>
+    <p><strong>Age:</strong> {{ app.user.age }}</p>
+</div>
+
+{% if app.user.shops|length > 0 %}
+    <h2>Your Shops</h2>
+    <ul>
+        {% for shop in app.user.shops %}
+            <li>{{ shop.name }} - <a href="{{ path('shop_dashboard', {'id': shop.id}) }}">View Dashboard</a></li>
+        {% endfor %}
+    </ul>
+    <p>Would you like to create another shop? <a href="{{ path('shop_create') }}">Create one now.</a></p>
+{% else %}
+    <p>You currently have no shops. <a href="{{ path('shop_create') }}">Create one now.</a></p>
+{% endif %}
+{% endblock %}

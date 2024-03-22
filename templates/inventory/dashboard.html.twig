@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inventory Dashboard - {{ inventory.name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Inventory Dashboard: {{ inventory.name }} in {{ shop.name }}</h1>
+
+    <div class="mb-3">
+        <a href="{{ path('product_create', {'shopId': shop.id, 'inventoryId': inventory.id}) }}" class="btn btn-success">Add Product</a>
+    </div>
+
+    {% if inventory.products and inventory.products|length > 0 %}
+        <ul class="list-group">
+            {% for product in inventory.products %}
+                <li class="list-group-item">
+                    {{ product.name }} <br>Quantity: {{ product.quantity }} <br>Price: {{ product.price|number_format(2) }} INR
+                    <div>
+                        <a href="{{ path('product_edit', {'id': product.id}) }}" class="btn btn-secondary">Edit</a>
+                        <a href="{{ path('product_move', {'productId': product.id}) }}" class="btn btn-warning">Move</a>
+                        <button type="button" class="btn btn-info" onclick="toggleVariations('variations-{{ product.id }}')">View Variations</a>
+                        <form action="{{ path('product_delete', {'id': product.id}) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Are you sure?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ product.id) }}">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+                    <div id="variations-{{ product.id }}" style="display: none; margin-top: 10px;">
+                        <strong>Variations:</strong>
+                        {% if product.variations|length > 0 %}
+                            <ul>
+                                {% for variation in product.variations %}
+                                    <li>{{ variation.name }} - SKU: {{ variation.sku }} - Quantity: {{ variation.quantity }} - Price: {{ variation.price|number_format(2) }} INR</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>No variations found for this product.</p>
+                        {% endif %}
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No products found in this inventory.</p>
+    {% endif %}
+
+    <a href="{{ path('shop_dashboard', {'id': shop.id}) }}" class="btn btn-primary">Back to Shop Dashboard</a>
+</div>
+
+<script>
+function toggleVariations(id) {
+    var element = document.getElementById(id);
+    if (element.style.display === 'none') {
+        element.style.display = 'block';
+    } else {
+        element.style.display = 'none';
+    }
+}
+</script>
+{% endblock %}

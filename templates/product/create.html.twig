@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create Product{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Create Product</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button type="submit" class="btn btn-success">Create Product</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('inventory_dashboard', {'shopId': shop.id}) }}" class="btn btn-primary">Back to Inventory</a>
+</div>
+{% endblock %}

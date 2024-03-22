@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inventory View - {{ inventory.name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Inventory: {{ inventory.name }}</h1>
+
+    {% if inventory.products|length > 0 %}
+        <ul class="list-group">
+            {% for product in inventory.products %}
+                <li class="list-group-item">
+                    Product: {{ product.name }} - Quantity: {{ product.quantity }} (Category: {{ product.category.name }})
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No products found in this inventory. <a href="{{ path('product_create', {'inventoryId': inventory.id}) }}" class="btn btn-success">Add a product</a></p>
+    {% endif %}
+
+    <a href="{{ path('inventory_dashboard', {'shopId': inventory.sho

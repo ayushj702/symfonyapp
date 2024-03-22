@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="h3 mb-3 font-weight-normal">Register</h1>
+
+    {{ form_start(registrationForm, {'attr': {'class': 'form-signin'}}) }}
+    
+    <div class="mb-3">
+        {{ form_label(registrationForm.name) }}
+        {{ form_widget(registrationForm.name, {'attr': {'class': 'form-control', 'placeholder': 'Enter your full name here.'}}) }}
+        {{ form_errors(registrationForm.name) }}
+    </div>
+
+    <div class="mb-3">
+        {{ form_label(registrationForm.email) }}
+        {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control', 'placeholder': 'Enter your correct email here.'}}) }}
+        {{ form_errors(registrationForm.email) }}
+    </div>
+
+    <div class="mb-3">
+        {{ form_label(registrationForm.age) }}
+        {{ form_widget(registrationForm.age, {'attr': {'class': 'form-control', 'placeholder': 'Enter your age here, must be 18+'}}) }}
+        {{ form_errors(registrationForm.age) }}
+    </div>
+
+    <div class="mb-3">
+        {{ form_label(registrationForm.plainPassword, 'Password') }}
+        {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control', 'placeholder': 'Password must be atleast 6 characters.'}}) }}
+        {{ form_errors(registrationForm.plainPassword) }}
+    </div>
+
+    <div class="mb-3 form-check">
+        {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}
+        {{ form_label(registrationForm.agreeTerms, 'I agree to the terms and conditions (you must agree to the terms and conditions)', {'attr': {'class': 'form-check-label'}}) }}
+        {{ form_errors(registrationForm.agreeTerms) }}
+    </div>
+
+    <button class="btn btn-lg btn-primary" type="submit">Register</button>
+    {{ form_end(registrationForm) }}
+</div>
+{% endblock %}

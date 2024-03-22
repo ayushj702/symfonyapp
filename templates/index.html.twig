@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Welcome to the Asset Management System{% endblock %}
+
+{% block content %}
+<h1>Welcome to the Asset Management System</h1>
+<p>This system provides robust tools for managing assets, including:</p>
+<ul>
+    <li>Inventory management</li>
+    <li>Shop registration with the ability for each user to register multiple shops</li>
+    <li>Detailed tracking of categories, products, and product variations</li>
+    <li>Insight into values and stocks directly connected with product variations</li>
+    <li>Capabilities to move inventory between shops and alter product details as needed</li>
+</ul>
+
+<div>
+    <a href="{{ path('app_login') }}" class="btn btn-primary">Login</a>
+    or
+    <a href="{{ path('register') }}" class="btn btn-secondary">Register</a>
+</div>
+{% endblock %}

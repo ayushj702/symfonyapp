@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Your Shops{% endblock %}
+
+{% block content %}
+<h2>Your Shops</h2>
+
+{% if shops|length > 0 %}
+    <ul>
+    {% for shop in shops %}
+        <li>
+            <a href="{{ path('shop_dashboard', {'id': shop.id}) }}">{{ shop.name }}</a>
+        </li>
+
+        
+    {% endfor %}
+    <p> 
+            <a href="{{ path('shop_create') }}" class="btn btn-primary">Create a New Shop</a>
+        </p>
+    </ul>
+{% else %}
+    <p>No shops could be found.</p>
+    <a href="{{ path('shop_create') }}" class="btn btn-primary">Create a New Shop</a>
+{% endif %}
+
+{% endblock %}

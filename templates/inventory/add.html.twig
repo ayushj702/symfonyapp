@@ -1,0 +1,32 @@
+{# templates/inventory/add.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Add Inventory{% endblock %}
+
+
+
+{% block content %}
+<div class="container">
+    <h1>Add Inventory to {{ shop.name }}</h1>
+
+    {{ form_start(form) }}
+        <div class="mb-3">
+            {{ form_label(form.name, 'Inventory Name') }}
+            {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.name) }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add Inventory</button>
+    {{ form_end(form) }}
+    {% if app.flashes('success') %}
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+    <a href="{{ path('shop_dashboard', {'id': shop.id}) }}" class="btn btn-secondary">Back to Shop Dashboard</a>
+</div>
+{% endblock %}

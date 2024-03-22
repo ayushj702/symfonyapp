@@ -1,0 +1,142 @@
+# Home page (User Dashboard)
+home:
+    path: /
+    controller: App\Controller\HomeController::index
+    methods: [GET]
+
+# User registration
+register:
+    path: /register
+    controller: App\Controller\RegistrationController::register
+    methods: [GET, POST]
+
+# User login
+app_login:
+    path: /login
+    controller: App\Controller\LoginAuthenticatorController::login
+    methods: [GET, POST]
+
+# User logout
+app_logout:
+    path: /logout
+    controller: App\Controller\LoginAuthenticatorController::logout
+
+# List of shops for the logged-in user
+shop_list:
+    path: /shops
+    controller: App\Controller\ShopController::list
+    methods: [GET]
+
+# Create a new shop
+shop_create:
+    path: /shop/create
+    controller: App\Controller\ShopController::create
+    methods: [GET, POST]
+
+# Display a specific shop's dashboard
+shop_dashboard:
+    path: /shop/{id}/dashboard
+    controller: App\Controller\ShopController::dashboard
+    methods: [GET]
+
+# Inventory management within a shop
+# Add a new inventory to a shop
+inventory_add:
+    path: /shop/{shopId}/inventory/add
+    controller: App\Controller\InventoryController::add
+    methods: [GET, POST]
+
+# Inventory dashboard within a shop
+inventory_dashboard:
+    path: /shop/{shopId}/inventory/{inventoryId}/dashboard
+    controller: App\Controller\InventoryController::dashboard
+    methods: [GET]
+
+# View a specific inventory
+inventory_view:
+    path: /inventory/{inventoryId}/view
+    controller: App\Controller\InventoryController::view
+    methods: [GET]
+
+# Delete a specific inventory
+inventory_delete:
+    path: /inventory/{inventoryId}/delete
+    controller: App\Controller\InventoryController::delete
+    methods: [POST]
+
+# Add a product to a specific inventory of a specific shop
+product_create:
+    path: /shop/{shopId}/inventory/{inventoryId}/product/create
+    controller: App\Controller\ProductController::create
+    methods: [GET, POST]
+
+# View details of a specific product
+product_view:
+    path: /product/{id}
+    controller: App\Controller\ProductController::view
+    methods: [GET]
+
+# Delete a specific product
+product_delete:
+    path: /product/{id}/delete
+    controller: App\Controller\ProductController::delete
+    methods: [POST]
+
+# Edit a specific product
+product_edit:
+    path: /product/{id}/edit
+    controller: App\Controller\ProductController::edit
+    methods: [GET, POST]
+
+# Move a specific product
+product_move:
+    path: /product/{productId}/move
+    controller: App\Controller\ProductController::moveProduct
+    methods: [GET, POST]
+
+# Product variation management within a product
+# Create a new product variation for a specific product
+product_variation_create:
+    path: /product/{productId}/variation/create
+    controller: App\Controller\ProductVariationController::create
+    methods: [GET, POST]
+
+# View details of a specific product variation
+product_variation_view:
+    path: /variation/{id}
+    controller: App\Controller\ProductVariationController::view
+    methods: [GET]
+
+# Move an inventory to another shop
+inventory_move:
+    path: /shop/{shopId}/inventory/move
+    controller: App\Controller\InventoryController::move
+    methods: [GET, POST]
+
+# Create a new category within a specific shop
+category_create:
+    path: /shop/{shopId}/category/create
+    controller: App\Controller\CategoryController::create
+    methods: [GET, POST]
+
+# View details of a specific category
+category_view:
+    path: /category/{id}
+    controller: App\Controller\CategoryController::view
+    methods: [GET]
+
+# Edit a specific product variation
+product_variation_edit:
+    path: /product/{productId}/variation/{variationId}/edit
+    controller: App\Controller\ProductVariationController::edit
+    methods: [GET, POST]
+
+product_add_variation:
+    path: /product/{productId}/add_variation
+    controller: App\Controller\ProductController::addVariation
+    methods: [GET, POST]
+
+product_remove_variation:
+    path: /product/{productId}/remove_variation
+    controller: App\Controller\ProductController::addVariation
+    methods: [GET, POST]

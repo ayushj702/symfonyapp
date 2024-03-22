@@ -1,0 +1,17 @@
+{# templates/inventory/move.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Move Inventory{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Move Inventory</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.inventoryItem) }}
+        {{ form_row(form.targetShop) }}
+        <button type="submit" class="btn btn-primary">Move</button>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

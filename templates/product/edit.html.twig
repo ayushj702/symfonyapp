@@ -1,0 +1,39 @@
+{# templates/product/edit.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Product - {{ product.name }}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Edit Product: {{ product.name }}</h1>
+
+    {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}
+
+    {# Render basic product fields #}
+    <div class="mb-3">{{ form_row(form.name) }}</div>
+    <div class="mb-3">{{ form_row(form.price) }}</div>
+    <div class="mb-3">{{ form_row(form.quantity) }}</div>
+    <div class="mb-3">{{ form_row(form.category) }}</div>
+
+    {# Render product variations #}
+    <h3>Product Variations</h3>
+    <div id="product_variations">
+        {% for variation in product.variations %}
+            <div class="variation mb-3">
+                <p>Variation Name: {{ variation.name }}</p>
+                <p>Variation SKU: {{ variation.sku }}</p>
+                <p>Variation Quantity: {{ variation.quantity }}</p>
+                <p>Variation Price: {{ variation.price }}</p>
+                <a href="{{ path('product_variation_remove', {'id': variation.id}) }}" class="btn btn-danger" onclick="return confirm('Are you sure?')">Remove</a>
+            </div>
+        {% endfor %}
+    </div>
+    {# Link to add a new variation #}
+    <a href="{{ path('product_variation_add', {'productId': product.id}) }}" class="btn btn-success mt-3">Add Variation</a>
+
+    <button type="submit" class="btn btn-primary mt-3">Update Product</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('inventory_dashboard', {'shopId': product.inventory.shop.id, 'inventoryId': product.inventory.id}) }}" class="btn btn-secondary mt-3">Back to Inventory Dashboard</a>
+</div>
+{% endblock %}

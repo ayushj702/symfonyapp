@@ -1,0 +1,37 @@
+{# templates/shop/dashboard.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Shop Dashboard - {{ shop.name }}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Dashboard: {{ shop.name }}</h1>
+    <div class="shop-details">
+        <p><strong>Shop ID:</strong> {{ shop.id }}</p>
+        <p><strong>SKU Count:</strong> {{ skuCount }}</p>
+    </div>
+
+    <!-- Move Inventory Item Button -->
+    <div class="mb-3">
+        <a href="{{ path('inventory_move', {'shopId': shop.id}) }}" class="btn btn-warning">Move Inventory Item</a>
+    </div>
+
+    <h2>Inventories</h2>
+    {% if inventories|length > 0 %}
+        <ul class="inventory-items">
+            {% for inventory in inventories %}
+                <li>
+                    {{ inventory.name }} - 
+                    <a href="{{ path('inventory_dashboard', {'shopId': shop.id, 'inventoryId': inventory.id}) }}">View Dashboard</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No inventories found.</p>
+    {% endif %}
+    <a href="{{ path('inventory_add', {'shopId': shop.id}) }}" class="btn btn-success">Add Inventory</a>
+    <a href="{{ path('category_create', {'shopId': shop.id}) }}" class="btn btn-danger">Create a Category for your Products</a>
+    <a href="{{ path('shop_list') }}" class="btn btn-primary">Back to Shop List</a>
+</div>
+{% endblock %}

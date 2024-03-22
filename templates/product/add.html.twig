@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add Product{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Add Product to Inventory: {{ inventory.name }}</h1>
+    
+    {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}
+
+        {# Basic product fields #}
+        <div class="mb-3">
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        
+        <div class="mb-3">
+            {{ form_label(form.price) }}
+            {{ form_widget(form.price, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        
+        <div class="mb-3">
+            {{ form_label(form.quantity) }}
+            {{ form_widget(form.quantity, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        
+        <div class="mb-3">
+            {{ form_label(form.category) }}
+            {{ form_widget(form.category, {'attr': {'class': 'form-select'}}) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.description) }}
+            {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        {# Product variations section #}
+        <h3>Product Variations</h3>
+        <div data-index="{{ form.variations|length }}" id="product_variations">
+            {% for variation in form.variations %}
+                <div class="mb-3" data-index="{{ loop.index0 }}">
+                    {{ form_row(variation.name) }}
+                    {{ form_row(variation.sku) }}
+                    {{ form_row(variation.quantity) }}
+                    {{ form_row(variation.price) }}
+                </div>
+            {% endfor %}
+        </div>
+        
+        {# Button to add a new variation. Implement JavaScript to handle this action. #}
+        <button type="button" class="btn btn-info" id="add_variation">Add Variation</button>
+
+        <button type="submit" class="btn btn-success">Add Product</button>
+    
+    {{ form_end(form) }}
+
+    <a href="{{ path('inventory_dashboard', {'shopId': inventory.shop.id, 'inventoryId': inventory.id}) }}" class="btn btn-secondary mt-3">Back to Inventory Dashboard</a>
+</div>
+
+{% endblock %}
