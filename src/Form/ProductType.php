@@ -30,7 +30,7 @@ class ProductType extends AbstractType
             ])
             // ->add('description', TextareaType::class, ['attr' => ['class' => 'form-control']])
             ->add('variations', CollectionType::class, [
-                'entry_type' => ProductVariationType::class,
+                'entry_type' => ProductVariationType::class, //inline-entity type
                 'entry_options' => ['label' => false],
                 'allow_add' => true,
                 'allow_delete' => true,

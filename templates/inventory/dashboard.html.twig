@@ -14,11 +14,18 @@
         <ul class="list-group">
             {% for product in inventory.products %}
                 <li class="list-group-item">
-                    {{ product.name }} <br>Quantity: {{ product.quantity }} <br>Price: {{ product.price|number_format(2) }} INR
+                    {{ product.name }} <br>Quantity: {{ product.getTotalQuantity() }} <br>
+                    Price: 
+                    {% if product.variations|length > 0 %}
+                        {% set prices = product.variations|map(variation => variation.price)|sort %}
+                        {{ prices|first|number_format(2) }} INR - {{ prices|last|number_format(2) }} INR
+                    {% else %}
+                        N/A
+                    {% endif %}
                     <div>
                         <a href="{{ path('product_edit', {'id': product.id}) }}" class="btn btn-secondary">Edit</a>
                         <a href="{{ path('product_move', {'productId': product.id}) }}" class="btn btn-warning">Move</a>
-                        <button type="button" class="btn btn-info" onclick="toggleVariations('variations-{{ product.id }}')">View Variations</a>
+                        <button type="button" class="btn btn-info" onclick="toggleVariations('variations-{{ product.id }}')">View Variations</button>
                         <form action="{{ path('product_delete', {'id': product.id}) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Are you sure?');">
                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ product.id) }}">
                             <button type="submit" class="btn btn-danger">Delete</button>

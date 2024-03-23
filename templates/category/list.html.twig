@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Categories{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Categories</h1>
+    <div class="row">
+        {% for category in categories %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ category.name }}</h5>
+                        {% if category.children|length %}
+                            <h6 class="card-subtitle mb-2 text-muted">Subcategories</h6>
+                            <div class="list-group">
+                                {% for subcategory in category.children %}
+                                    <div class="list-group-item flex-column align-items-start">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h6 class="mb-1">{{ subcategory.name }}</h6>
+                                        </div>
+                                        {% if subcategory.products|length %}
+                                            <small>Products:</small>
+                                            <ul class="list-unstyled mt-2">
+                                                {% for product in subcategory.products %}
+                                                    <li>
+                                                        <a href="{{ path('inventory_dashboard', {'shopId': product.inventory.shop.id, 'inventoryId': product.inventory.id}) }}">
+                                                            {{ product.name }} - {{ product.price }}
+                                                        </a>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% else %}
+                                            <small>No products found.</small>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p>No subcategories found.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

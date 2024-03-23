@@ -1,5 +1,3 @@
-{# templates/shop/dashboard.html.twig #}
-
 {% extends 'base.html.twig' %}
 
 {% block title %}Shop Dashboard - {{ shop.name }}{% endblock %}
@@ -15,6 +13,11 @@
     <!-- Move Inventory Item Button -->
     <div class="mb-3">
         <a href="{{ path('inventory_move', {'shopId': shop.id}) }}" class="btn btn-warning">Move Inventory Item</a>
+    </div>
+
+    <!-- View Categories Button -->
+    <div class="mb-3">
+        <a href="{{ path('category_list') }}" class="btn btn-info">View Categories</a>
     </div>
 
     <h2>Inventories</h2>

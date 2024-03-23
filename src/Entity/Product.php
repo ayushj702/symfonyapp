@@ -6,6 +6,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\Category;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'products')]
@@ -29,13 +30,15 @@ class Product
     #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
     private $price;
 
-    #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductVariation::class, cascade: ['persist', 'remove'])]
+    //check cascade
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: ProductVariation::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $variations;
 
     #[ORM\ManyToOne(targetEntity: Inventory::class, inversedBy: 'products')]
     #[ORM\JoinColumn(nullable: false)]
     private $inventory;
 
+    //remove quantity
     #[ORM\Column(type: 'integer')]
     private ?int $quantity = null;
 
@@ -43,7 +46,6 @@ class Product
     {
         $this->variations = new ArrayCollection();
     }
-
 
     public function getId(): int
     {
@@ -138,5 +140,14 @@ class Product
             }
         }
         return $this;
+    }
+
+    public function getTotalQuantity(): int
+    {
+        $totalQuantity = 0;
+        foreach ($this->variations as $variation) {
+            $totalQuantity += $variation->getQuantity();
+        }
+        return $totalQuantity;
     }
 }

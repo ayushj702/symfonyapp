@@ -11,6 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class ProductVariationType extends AbstractType
 {
+    //use forminterface for submit button.
+    //for implementing remove here
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder

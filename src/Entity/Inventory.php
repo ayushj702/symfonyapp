@@ -20,8 +20,8 @@ class Inventory
     private $id;
 
     #[Assert\NotBlank]
-    #[ORM\Column(type: 'string', length: 255)]
-    private $name;
+    #[ORM\Column(type: 'string', length: 255, unique: true)]
+    private $name; //unique
 
     #[ORM\ManyToOne(targetEntity: Shop::class, inversedBy: 'inventoryItems')]
     #[ORM\JoinColumn(nullable: false)]

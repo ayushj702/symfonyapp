@@ -31,7 +31,6 @@ class MoveInventoryType extends AbstractType
                 'class' => Shop::class,
                 'choice_label' => 'name',
                 'label' => 'Target Shop',
-                // Exclude the current shop from the target shop options
                 'query_builder' => function (EntityRepository $er) use ($shop) {
                     return $er->createQueryBuilder('s')
                         ->where('s.id != :shopId')
@@ -44,7 +43,7 @@ class MoveInventoryType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => null,
-            'shop' => null, // Add shop as an option to be passed into the form
+            'shop' => null, 
         ]);
     }
 }

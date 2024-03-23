@@ -1,7 +1,5 @@
 <?php
 
-// src/Controller/ProductVariationController.php
-
 namespace App\Controller;
 
 use App\Entity\Product;

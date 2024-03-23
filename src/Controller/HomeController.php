@@ -1,12 +1,11 @@
 <?php
 
-// src/Controller/HomeController.php
-
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\User;
 
 class HomeController extends AbstractController
 {
@@ -15,7 +14,9 @@ class HomeController extends AbstractController
     {
         // check log in
         if ($this->getUser()) {
-            $shops = $this->getUserShops($this->getUser());
+            $user = new User;
+
+            $shops = $user->getShops();
 
             // home for users
             return $this->render('home.html.twig', [
@@ -27,14 +28,6 @@ class HomeController extends AbstractController
         }
     }
 
-    private function getUserShops($user)
-    {
-        //dummy data right now for test
-        return [
-            ['name' => 'Shop 1', 'inventory_count' => 10, 'sku_count' => 50],
-            ['name' => 'Shop 2', 'inventory_count' => 5, 'sku_count' => 25],
-        ];
-    }
 }
 
 

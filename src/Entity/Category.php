@@ -122,4 +122,7 @@ public function getChildren(): Collection
         }
         return $this;
     }
+
+    //create a function for the hierarchy of categories to display only the subcategories
+    //first main cat then sub: electronics: mobile
 }

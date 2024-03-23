@@ -1,7 +1,5 @@
 <?php
 
-// src/Controller/ProductController.php
-
 namespace App\Controller;
 
 use App\Entity\Category;
@@ -73,51 +71,39 @@ class ProductController extends AbstractController
     }
 
     #[Route('/product/{id}/edit', name: 'product_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, EntityManagerInterface $entityManager, Product $product): Response
-    {
+    public function edit(Request $request, EntityManagerInterface $entityManager, Product $product): Response {
+        // Clone the original variations to compare later
         $originalVariations = new ArrayCollection();
-
-        // Create an array copy of the original ProductVariation objects
         foreach ($product->getVariations() as $variation) {
-            $originalVariations->add($variation);
+            $originalVariations->add(clone $variation);
         }
 
         $form = $this->createForm(ProductType::class, $product);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Remove the variation from the database if it's no longer in the current variations
-            foreach ($originalVariations as $originalVariation) {
-                if (false === $product->getVariations()->contains($originalVariation)) {
-                    $entityManager->remove($originalVariation);
+            foreach ($product->getVariations() as $variation) {
+                if (empty($variation->getSku())) {
+                    // Call the auto-generate method if SKU is empty
+                    $variation->generateUniqueSKU();
+                }
+                if (!$originalVariations->contains($variation)) {
+                    // New variation
+                    $variation->setProduct($product);
+                    $entityManager->persist($variation);
                 }
             }
 
-            // Now, process the current variations
-            foreach ($product->getVariations() as $variation) {
-                // Just to ensure consistency, link back the product to its variations
-                $variation->setProduct($product);
-
-                // Let Doctrine know you want to (potentially) save the variations
-                $entityManager->persist($variation);
-            }
-
-            // Save the changes
-            $entityManager->persist($product);
             $entityManager->flush();
 
             $this->addFlash('success', 'Product updated successfully.');
-            return $this->redirectToRoute('inventory_dashboard', [
-                'shopId' => $product->getInventory()->getShop()->getId(),
-                'inventoryId' => $product->getInventory()->getId(),
-            ]);
+            return $this->redirectToRoute('inventory_dashboard', ['shopId' => $product->getInventory()->getShop()->getId(), 'inventoryId' => $product->getInventory()->getId()]);
         }
 
-        return $this->render('product/edit.html.twig', [
-            'product' => $product,
-            'form' => $form->createView(),
-        ]);
+        return $this->render('product/edit.html.twig', ['product' => $product, 'form' => $form->createView()]);
     }
+
+
 
 
     #[Route('/product/{productId}/move', name: 'product_move')]
@@ -142,8 +128,7 @@ class ProductController extends AbstractController
                 // Move product and its variations
                 $product->setInventory($targetInventory);
                 foreach ($product->getVariations() as $variation) {
-                    // If needed, adjust variation properties or create new variations under new inventory
-                    $variation->setProduct($product);  // Ensure the relation is updated
+                    $variation->setProduct($product); 
                     $entityManager->persist($variation);
                 }
 
@@ -176,6 +161,7 @@ class ProductController extends AbstractController
 
         return $this->redirectToRoute('product_edit', ['id' => $productId]);
     }
+    
 
 
 }

@@ -8,7 +8,6 @@
     
     {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': true}}) }}
 
-        {# Basic product fields #}
         <div class="mb-3">
             {{ form_label(form.name) }}
             {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
@@ -27,11 +26,6 @@
         <div class="mb-3">
             {{ form_label(form.category) }}
             {{ form_widget(form.category, {'attr': {'class': 'form-select'}}) }}
-        </div>
-
-        <div class="mb-3">
-            {{ form_label(form.description) }}
-            {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
         </div>
 
         {# Product variations section #}

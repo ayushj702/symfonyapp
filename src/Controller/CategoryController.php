@@ -1,7 +1,5 @@
 <?php
 
-// src/Controller/CategoryController.php
-
 namespace App\Controller;
 
 use App\Entity\Category;
@@ -57,6 +55,17 @@ class CategoryController extends AbstractController
     {
         return $this->render('category/view.html.twig', [
             'category' => $category,
+        ]);
+    }
+
+    #[Route('/categories', name: 'category_list')]
+    public function listCategories(EntityManagerInterface $entityManager): Response
+    {
+        // Fetch only top-level categories
+        $categories = $entityManager->getRepository(Category::class)->findBy(['parent' => null]);
+
+        return $this->render('category/list.html.twig', [
+            'categories' => $categories,
         ]);
     }
 }

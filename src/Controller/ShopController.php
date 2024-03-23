@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
+use App\Repository\ShopRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ShopController extends AbstractController
@@ -54,12 +55,11 @@ class ShopController extends AbstractController
     }
 
     #[Route('/shop/{id}/dashboard', name: 'shop_dashboard')]
-    public function dashboard(Shop $shop): Response
+    public function dashboard(Shop $shop, ShopRepository $shopRepository): Response
     {
-        // Example logic for SKU count; you'll have your implementation.
-        $skuCount = 0; // Placeholder for actual SKU count logic.
-        
-        // Now using getInventories() based on the updated Shop entity.
+        $shopId = $shop->getId();
+        $skuCount = $shopRepository->countSKUsForShop($shopId);
+
         $inventories = $shop->getInventories();
 
         return $this->render('shop/dashboard.html.twig', [
